@@ -1,0 +1,87 @@
+#authPage {
+    position: relative;
+    background-image: url("https://i.ibb.co/HCH4KHS/Launch-Pad-logos-black.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+    min-height: 95vh;
+}
+.form1s {
+    margin-left: 50%;
+    margin-top:10%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #fff;
+    width: 30%;
+}
+.btn-01 {
+    text-decoration: underline;
+    color: #2222c7;
+    margin-bottom: 3%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+.btn-02 {
+    background-color: #ffffff;
+    border: 0.80px solid #000;
+    color:#000;
+    cursor: pointer;
+    padding: 5px 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    transition: all 200ms ease-in;
+}
+.btn-02:hover {
+    background-color: #000000;
+    border: 0.80px solid rgb(0, 0, 0);
+    color: #ffffff;
+}
+
+.btn-grad {background-image: linear-gradient(to right, #283048 0%, #859398  51%, #283048  100%)}
+.btn-grad {
+   margin: auto ;
+   padding: 15px 29px;
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   box-shadow: 0 0 20px #eee;
+   border-radius: 10px;
+   display: block;
+ }
+
+ .btn-grad:hover {
+   background-position: right center; /* change the direction of the change here */
+   color: #fff;
+   text-decoration: none;
+ }
+ @media only screen and (max-width: 1400px)  {
+    .form1s{
+        margin: auto;
+        margin-top: 4%;
+        position: none;
+        width: 50%;
+    }
+    #authPage{
+        background-image: none;
+    }
+}
+@media only screen and (max-width: 1200px)  {
+    .form1s{
+        margin: auto;
+        margin-top: 14%;
+        position: none;
+        width: 60%;
+    }
+    #authPage{
+        background-image: none;
+}
+}

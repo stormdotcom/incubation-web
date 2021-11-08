@@ -1,0 +1,12 @@
+.error-page {
+    min-height: 97vh;
+    margin: auto auto;
+}
+.error-template {
+    position: relative;
+    background-image: url("https://i.ibb.co/DfDs8Xp/LP-trans.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    margin-top: 7%;
+}
