@@ -1,9 +1,9 @@
 import express from  "express";
 const router = express.Router();
 
-import { signin, signup, companyDetails } from "../controllers/users.js";
+import { signin, signup, fetchUser } from "../controllers/users.js";
 
-router.get("/", companyDetails);
-router.post("/signin", signin);
-router.post("/signup", signup);
+router.get("/", fetchUser);
+router.post("/user-signin", signin);
+router.post("/user-signup", signup);
 export default router;

@@ -1,0 +1,65 @@
+.video-container {
+    padding: 1px;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Just styling the content of the div, the *magic* in the previous rules */
+.video-container .caption {
+  z-index: 1;
+  position: relative;
+  top:63%;
+  text-align: center;
+  padding: 10px;
+}
+
+.btn-04 {
+    background-color: #43165c;
+   margin: 0 5px;
+    font-size: 20px;
+    line-height: 26px;
+   padding: 15px 35px;
+   text-align: center;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: #fff;            
+   border-radius: 10px;
+   display: block;
+   border-radius: 100px
+ }
+
+.btn-04:hover {
+    background-color: #7a26ce ;
+   color: #fff;
+   box-shadow: 0 0 20px #d8bff1;
+ }
+ .btn-05 {
+    background-color: #ffffff;
+    margin: auto 5px;
+    font-size: 20px;
+    line-height: 26px;
+   padding: 15px 35px;
+   text-align: center;
+   border:1px solid black;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: #000000;            
+   border-radius: 10px;
+   display: block;
+   border-radius: 100px;
+ }
+
+.btn-05:hover {
+   color: #000;
+   background-color: #dadde2;
+ }

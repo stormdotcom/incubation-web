@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+@import url('http://fonts.cdnfonts.com/css/kicker');
 *{  padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Arvo', serif;
+    font-family: 'Kicker', sans-serif;                              
+    overflow-x: hidden;
 }

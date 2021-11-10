@@ -11,14 +11,14 @@ import Auth from "./components/AuthenticationPage/AuthenticationPage"
 // index page shwoing details
 function App() {
   return (
-    <Router>  
+ 
+      <Router>  
        <Routes>
-       <Route path="/" element={<Home />} />
-      <Route path="/signin" element={<Auth />} />
-      <Route path="/signup" element={<Auth />} />
-      <Route path="/*" element={<ErrorPage />} />
-        </Routes>
-    <Footer />
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/*" element={<ErrorPage />} />
+       </Routes>
+       <Footer />
     </Router>
   );
 }
