@@ -1,0 +1,141 @@
+.main {
+    min-height: 100vh;
+    padding: 50px;
+}
+.subMain{
+    display: flex;
+}
+.formBody {
+    margin: auto;
+    padding: 80px 10px 100px 10px;
+    box-shadow: rgba(233, 232, 232, 0.15) 1.95px 1.95px 2.6px 2.6px;
+    background-color: #f3f2f2;
+    border-radius: 2px;
+    min-height: 80vh;
+}
+.sideBox {
+    width: 10%;
+    display: flex;
+    align-items: center;
+
+
+}
+.mainBox {
+    width: 80%;
+    padding-top:20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.formBody h3{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+}
+.box {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5px;
+    width: 80px;
+    height: 80px;
+    border-radius: 2px;
+    background-color: #aca7a7;
+    transition: all 200ms ease-out;
+}
+.box:hover {
+    background-color: #8d8a8a;
+}
+.box01 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5px;
+    width: 80px;
+    height: 80px;
+    border-radius: 2px;
+    background-color: #9495f8;
+    transition: all 200ms ease-out;
+}
+.box01:hover {
+    translate: -1px -3px;
+    background-color: #7375ec;
+}
+.box02 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5px;
+    width: 80px;
+    height: 80px;
+    border-radius: 2px;
+    background-color: #ecea53;
+    transition: all 200ms ease-out;
+}
+.box02:hover {
+    translate: -1px -3px;
+    background-color: #e4e139;
+}
+table {
+    width: 100%;
+  }
+
+  .blue{
+      border-radius: 20px;
+      background-color: #7375ec;
+      height: 1px;
+      width: 14px;
+  }
+  .grey {
+    border-radius: 20px;
+    background-color: #aca7a7;
+    height: 1px;
+    width: 14px;
+  }
+  .yellow {
+    border-radius: 20px;
+    background-color: #ecea53;
+    height: 1px;
+    width: 14px;
+  }
+  td {
+      padding: 0 5px;
+      font-size:small;
+  }
+  .swal2-icon, .swal2-info {
+    border-color: #710fa5 !important;
+    color: #710fa5 !important;
+}
+.swal2-confirm {
+    background-color: #710fa5;
+}
+  @media screen and (max-width:1042px) {
+      .formBody {
+          padding: 10px;
+      }
+      .subMain {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+         
+      }
+      .mainBox,.subMain{
+        margin: 0 auto;
+      }
+      .sideBox {
+        margin: 0 auto;
+        width: 100%;
+      }
+      td {
+        padding: 2px 5px;
+        font-size:small;
+    }
+    .box, .box01, .box02 {
+        width: 40px;
+        height: 40px;
+    }
+    table {
+        margin: 0 auto;
+        width: 15%;
+      }
+      
+  }

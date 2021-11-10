@@ -31,4 +31,5 @@ app.use((req, res, next) => {
   });   
 // app.use("/admin", adminRouter);
 mongoose.connect(CONNECTION_URL)
-    .then(()=> app.listen(port, ()=>console.log("Server running on port :" + port)))
+    .then(()=> app.listen(port, ()=>console.log("Server running on port " + port)))
+    .catch((err)=> console.log("ERROR DB Connecting \n" + err.message))

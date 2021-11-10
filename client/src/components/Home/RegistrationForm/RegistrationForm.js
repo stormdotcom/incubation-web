@@ -1,12 +1,16 @@
 import React from 'react'
-import IndexPage from "./IndexPage"
+import Navbar from '../NavBar/Navbar';
+import IndexPage from "./IndexPage";
+import "./style.css"
 function RegistrationForm() {
-    let user = true;
+    let user = false;
     return (
 
         <div>
             { user ? <IndexPage /> :
-            <div>
+            <>
+            <Navbar />
+            <div className="container">
          <form>
         <div className="row  mb-5 pt-5">
             <h1 className="text-center mb-5">Registration</h1>
@@ -159,12 +163,13 @@ function RegistrationForm() {
           </div> 
           <div className="col col-lg-12 p-3">
                  <div className="form-outline mt-4  d-flex justify-content-center align-item-center">
-                 <button type="submit" className="btn btn-primary btn-block mb-4 px-3">Register a Slot</button>
+                 <button type="submit" className="btn-04  mb-4">Register a Slot</button>
              </div>
           </div> 
         </div>
         </form>
         </div>
+        </>
             }
       </div>
     )

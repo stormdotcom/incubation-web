@@ -15,7 +15,7 @@ export const signin= async(req, res)=>{
         res.status(200).json({result: existingUser, token})
     }
     catch(err){
-        res.status(500).json({message: "Something went wrong"})
+        res.status(200).json({message: "Something went wrong ", error:true})
     }
 }
 export const signup= async(req, res)=>{
@@ -36,13 +36,13 @@ export const signup= async(req, res)=>{
     }
 }
 export const fetchUser=async(req,res)=>{
-    const id= req.params.id
-    console.log(id, "params id")
+    const {userID}= req.body
     try {
-            const userDetails =await User.find({_id:id});
+            const userDetails =await User.find({_id:userID});
+            conseol.log(userDetails)
             if(!userDetails) res.send(200).json({message: "user not found", error: true})
             res.send(200).json(userDetails)
     } catch (error) {
-        res.status(500).json({message: "Something went wrong"})
+        res.status(200).json({message: "Something went wrong", error: true})
     }
 }

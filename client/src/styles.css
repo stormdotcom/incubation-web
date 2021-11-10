@@ -1,7 +1,10 @@
-@import url('http://fonts.cdnfonts.com/css/kicker');
+@import url('http://fonts.cdnfonts.com/css/heebo');
+
+
+
 *{  padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Kicker', sans-serif;                              
-    overflow-x: hidden;
+    font-family: 'Heebo', sans-serif;                                                                         
+
 }

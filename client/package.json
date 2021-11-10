@@ -21,6 +21,7 @@
     "react-router-dom": "^6.0.1",
     "react-scripts": "4.0.3",
     "redux-persist": "^6.0.0",
+    "sweetalert2": "^11.1.10",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

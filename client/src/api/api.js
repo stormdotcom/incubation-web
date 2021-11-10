@@ -40,11 +40,11 @@ export const signup = (formData)=> {
         }
     })
 } 
-export const fetchUser=(id)=>{
-    console.log(id)
+export const fetchUser=(userId)=>{
     return new Promise(async(resolve, reject)=>{
         try {
-            const result = await axios.get(url);
+            const result = await axios.get(url, userId);
+            console.log(result, "user herer")
             if(result) {
                 reject( new Error("User not found"))
             }

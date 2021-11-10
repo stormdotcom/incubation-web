@@ -21,8 +21,6 @@ function Auth(props) {
   //  let user= JSON.parse(localStorage.getItem('LaunchPad'))
     async function handleSignIn(e){
       e.preventDefault()
-      delete formData.fullname;
-      delete formData.confirmPassword;
      dispatch(loginPending())
      try {
       const isAuth =await signin(formData);
