@@ -5,3 +5,16 @@
     padding: 20px 10px;
     
 }
+
+tr {
+    margin: 20px 2px; 
+    padding: 12px 2px;
+}
+  td:first-child {
+      width: 30%;
+      text-align: left;
+  }
+  td {
+      margin: 20px 2px; 
+    text-align: center;
+}

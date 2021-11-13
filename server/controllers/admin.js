@@ -30,17 +30,18 @@ export const changePending= async(req, res)=>{
 }
 
 export const addSlots= async(req, res)=>{
-    // const {count} = req.body
+    let {count} = req.body
+    let numberof = count
+    console.log(count)
 
     res.setHeader('Content-Type', 'text/plain');
 
     try {
-        let count=5;
-        while(count>=1) {
-            const result= await Slot.create({companyName:"empty"}).then(resp=> res.status(200).json({message:"Success added", error:false}))
+        do {
+            const result= await Slot.create({companyName:""}).then(resp=> res.status(200).json({message:"Success added", error:false}))
             .catch(err=> res.status(200).json({message:err.message, error:true}));
-            count--;
-        }
+            numberof--;
+        }while(numberof>=1)
         
   
     }catch(err){
@@ -65,14 +66,19 @@ export const getAllUsers= async(req, res)=>{
     }
 }
 export const setSlot= async(req, res)=>{
-    const {id, slotID}=req.body
+    const {userID, slotId}=req.body
     console.log(req.body)
     try {   
         // todo
         // set true in companysCollection
-             await User.findOneAndUpdate({_id:id}, {slotAlloacated:true}).then((res)=>{
-            }).catch(err=> res.status(200).json({message:err.message, error:true}));
-            await Slot.findOneAndUpdate({_id:slotID}, {available:false, userID:id}).then(res => console.log(res))
+            let user= await User.findOneAndUpdate({_id:userID}, {slotAlloacated:true})
+            if(user) {
+                console.log("userAllocated "+user._id)
+                await Slot.findOneAndUpdate({_id:slotId}, {available:false, userID:userID, companyName:user.fullname}).then(res1 => console.log("slotAllocated "+res1._id))
+                .catch((err)=> {throw new Error(err.message)})
+            } 
+            else throw new Error("error fetching user")
+
     }catch(err){
         console.log(err.message)
     }

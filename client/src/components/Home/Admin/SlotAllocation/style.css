@@ -108,6 +108,16 @@ table {
 .swal2-confirm {
     background-color: #710fa5;
 }
+.buttonGroup {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+.companyName p {
+    text-align: center;
+    color:#424242;
+    margin: auto;
+}
   @media screen and (max-width:1042px) {
       .formBody {
           padding: 10px;

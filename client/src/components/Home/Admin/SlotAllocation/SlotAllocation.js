@@ -1,61 +1,86 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import Swal from "sweetalert2";
-import { Button } from "@mui/material";
+import Button from '@mui/material/Button';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { addSlots, getAllSlots, getAllusers, slotSelection} from "../../../../api/adminAPI";
+import {
+  addSlots,
+  getAllSlots,
+  getAllusers,
+  slotSelection,
+} from "../../../../api/adminAPI";
 
 function SlotAllocation() {
-  let [slots, setSlots]=useState([]);
-  let [click, setCLicked]=useState(false)
-  let [allusers, setAllUser] =useState([])
+  let [slots, setSlots] = useState([]);
+  let [click, setCLicked] = useState(false);
+  let [allusers, setAllUser] = useState([]);
   useEffect(() => {
-    getAllSlots().then((result) =>setSlots(() => [...result]))
-    getAllusers().then((result)=> setAllUser(()=> [...result]))
-  }, [click])
-  const selectSlot=async (i)=>{
-      let user = allusers[i]
-      slotSelection(user._id)
-  }
-  let slotId;
-  let inputUsers = allusers.map((ele)=> ele.fullname)
-  function slotHandle({_id}) {
-    slotId = _id
-    console.log(slotId)
+    getAllSlots().then((result) => setSlots(() => [...result]));
+    getAllusers().then((result) => setAllUser(() => [...result]));
+  }, [click]);
+  const selectSlot = async (i, slotId) => {
+    let user = allusers[i];
+    slotSelection(user._id, slotId);
+  };
+
+  let inputUsers = allusers.map((ele) => ele.fullname);
+  function slotHandle(id) {
     Swal.fire({
-      title:"Select Users",
-      input: 'select',
-      inputOptions: inputUsers
+      title: "Select Users",
+      input: "select",
+      inputOptions: inputUsers,
     }).then((result) => {
-      selectSlot(result.value, slotId)
+      if (result.value) {
+        selectSlot(result.value, id);
+      }
     });
   }
-  
-  const handelAddSlot= async ()=>{
-    await addSlots()
-    setCLicked((prev)=>!prev)
+
+  const handelAddSlot = async () => {
     Swal.fire({
-      title: 'Add Slots',
-      icon: 'add',
-      input: 'range',
-      inputLabel: 'Number of slot',
+      title: "Add Slots",
+      icon: "add",
+      input: "range",
+      inputLabel: "Number of slot",
       inputAttributes: {
         min: 1,
-        max: 50,
-        step: 1
+        max: 10,
+        step: 1,
       },
-      inputValue: 5
-    })
-
-  }
+      inputValue: 2,
+    }).then((result) => {
+      if (result.value) {
+        addSlots(result.value);
+      }
+    });
+  };
   return (
     <>
       <div className="main">
         <div className="formBody">
           <h3> Booking Slot</h3>
-          <Button onClick={handelAddSlot} color="primary" variant="contained" size="medium"> <AddCircleIcon color="#fff" /> Add Slots</Button>
+          <div className="buttonGroup">
+          <Button
+            onClick={handelAddSlot}
+            color="primary"
+            variant="contained"
+            size="medium"
+          >
+            {" "}
+            <AddCircleIcon color="#fff" /> Add Slots
+          </Button>
+          <Button
+            onClick={()=>setCLicked(prev=> !prev)}
+            color="info"
+            variant="contained"
+            size="medium"
+          >
+            {" "}
+            <RefreshIcon color="#fff" /> Refresh
+          </Button>
+          </div>
           <div className="subMain">
-            
             <div className="sideBox">
               <table>
                 <tbody>
@@ -77,13 +102,20 @@ function SlotAllocation() {
             {/* Small Box */}
             <div className="mainBox">
               {slots.map((ele, index) => (
-                <div
+                ele.available ?
+                (<div
                   key={index}
-                  onClick={()=> slotHandle(ele)}
-                  className={ele.available? "box01 text-center " : "box text-center"}
-                >
-                  <p>  {ele.companyName} </p>
+                  onClick={() => slotHandle(ele._id)}
+                  className="box01 ">
+                  <p> {ele.companyName} </p>
+                </div>)
+                : (
+                  <div
+                  key={index}
+                  className="box companyName">
+                      <p> {ele.companyName} </p>
                 </div>
+                )
 
                 // ele.pending  && (
                 //   <div
@@ -91,9 +123,8 @@ function SlotAllocation() {
                 //   className="box0w text-center"
                 // >
                 //   <p> {ele.companyName} </p>
-                // </div>    
+                // </div>
                 // )
-               
               ))}
             </div>
           </div>

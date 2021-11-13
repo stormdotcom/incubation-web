@@ -65,10 +65,8 @@ export const getAllusers =async (count) =>{
 
 }
 export const slotSelection =async (userID, slotId) =>{
-    console.log(slotId)
-
     try {
-        const result =await API.post("/admin/select-slot", {id:userID, slotID:slotId});
+        const result =await API.post("/admin/select-slot", {userID, slotId});
         if(!result) {
            throw new Error("Error Creating Slot")
         }

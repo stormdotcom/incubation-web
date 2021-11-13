@@ -4,7 +4,7 @@ import {TableRow, TableHead, TableContainer, TableCell, TableBody, Table} from '
 import Paper from '@mui/material/Paper';
 import {Button} from "@mui/material"
 import {changePendingStatus} from "../../../../api/adminAPI"
-
+import Swal from "sweetalert2"
 function createData(id, userID,name, logo, commpanyName, approved, allocated) {
     return { id,userID, name, logo, commpanyName, approved, allocated };
 }
@@ -20,7 +20,23 @@ function AllList({applicationList}) {
         const newApplicant =   newList.map((element, index) => {
             return createData(element.index=index, element._id, element.name,element.logo, element.commpanyName,element.approved, element.allocated )
              })
-     
+const handleView=(user)=>{
+    let currentUser = applicationList.filter(ele => ele._id === user.userID);
+    let {pending, _id, logo, __v, index,...rest} =currentUser[0];
+    let htmlCode = "";
+    for (const [key, value] of Object.entries(rest)) {
+        htmlCode += "<tr> <td> "+key+"</td>  <td className='rawVal'>"+value+"</td>   </tr> <tr>"
+      }
+    Swal.fire({
+        title:rest.companyName + " LLP",
+        imageUrl: rest.logo,
+        imageHeight: 20,
+        html:
+             '<table name="mytab" id="myTab1">' +
+             htmlCode+
+            '</table>',
+      })
+}   
 const handlePending = (userID, key)=>{
 
     changePendingStatus(userID)
@@ -56,7 +72,7 @@ const handlePending = (userID, key)=>{
                                         <TableCell align="center">{row.companyName}</TableCell>
                                         <TableCell align="center">Yes</TableCell>
                                         <TableCell align="center">{row.approved ? "Yes" : "No"}</TableCell>
-                                        <TableCell align="center"> <Button size="small">View</Button></TableCell>
+                                        <TableCell align="center"> <Button onClick={()=>handleView(row)} size="small">View</Button></TableCell>
                                         <TableCell align="center"> <Button onClick={()=>handlePending(row.userID, index)} variant="contained" size="medium">Pending</Button> </TableCell> 
                                     </TableRow>
                                 ))}
@@ -102,7 +118,7 @@ const handlePending = (userID, key)=>{
                                         <TableCell align="center">{row.companyName}</TableCell>
                                         <TableCell align="center">{row.approved ? "Yes" : "No"}</TableCell>
                                         <TableCell align="center">{row.allocated ? "Yes" : "No"}</TableCell>
-                                        <TableCell align="center"> <Button size="small">View</Button></TableCell>
+                                        <TableCell align="center"> <Button  onClick={()=>handleView(row)} size="small">View</Button></TableCell>
                                          <TableCell align="center">{!row.allocated ?  <Button variant="contained" size="medium">Allocate</Button> : "Fully Approved"}</TableCell>
                                     </TableRow>
                                 ))}
