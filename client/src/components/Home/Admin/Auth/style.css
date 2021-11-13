@@ -1,0 +1,15 @@
+#adminAuthPage {
+    min-height: 90vh;
+    padding: auto;
+}
+.form2 {
+    padding: 25px;
+    margin: auto;
+    margin-top: 20vh;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #fff;
+    width: 30%;
+    min-height: 30%;
+}

@@ -3,54 +3,64 @@ import {useDispatch, useSelector} from "react-redux"
 import "./styles.css"
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import {signin, signup} from "../../api/api"
+import {signin, signup} from "../../api/api";
+// import {  getUserSuccess } from "../../Redux/userSlice/userSlice"
+import { getUserProfile} from "../AuthenticationPage/userAction"
 import {loginPending, loginSuccess, loginFail} from "../../Redux/userSlice/loginSlice";
 import {useNavigate} from 'react-router-dom';
-import { getUserProfile } from './userAction';
 const logo = "https://i.ibb.co/xfPrGPW/Logo.png"
 const initialValue = {fullname:"", email: "", password:"", confirmPassword:""}
-function Auth(props) {
+function Auth() {
     const dispatch = useDispatch();
     const navigate  = useNavigate()
-    const  {isLoading, isAuth, error} = useSelector(state=> state.login)
+    const  {isLoading, error} = useSelector(state=> state.login)
     const [formData, setFormData] =useState(initialValue)
     const [toggle, setToggle] =useState(false)
-    const toggleHandle = (props)=>{
+    const toggleHandle = ()=>{
         setToggle((prevValue) => !prevValue)
+        dispatch(loginFail(""))
     }
-  //  let user= JSON.parse(localStorage.getItem('LaunchPad'))
     async function handleSignIn(e){
       e.preventDefault()
      dispatch(loginPending())
      try {
       const isAuth =await signin(formData);
-      if(isAuth.data.error) throw new Error(isAuth.data.message)
-      dispatch(loginSuccess())
-      dispatch(getUserProfile(isAuth.data.result._id))
-
-      navigate("/")
+      if(isAuth.data?.error) throw new Error(isAuth.data.message)
+      else {
+        dispatch(loginSuccess(isAuth.data.token))
+        dispatch(getUserProfile(isAuth.data.result._id))
+        navigate("/")
+      }
      } catch (error) {
+      
        dispatch(loginFail(error.message))
+       navigate("/auth")
      }
       
     }
     async function handleSignUp(e){
       e.preventDefault()
-          //  dispatch(signupPending())
+           dispatch(loginSuccess())
      try {
       const isAuth =await signup(formData);
+      console.log(isAuth)
       if(isAuth.data?.error) throw new Error(isAuth.data.message)
-      dispatch(loginSuccess())
-      console.log(isAuth.data)
+      else {
+        dispatch(loginSuccess(isAuth.data.token))
+        dispatch(getUserProfile(isAuth.data.result._id))
+        navigate("/")
+      }
+     
      } catch (error) {
        dispatch(loginFail(error.message))
+       navigate("/auth")
      }
       
     }
     function handleChange(e){
         setFormData({...formData, [e.target.name]: e.target.value})
     }
-    return (
+    return ( 
         <div id="authPage">
             <div className="form1s row d-flex justify-content-center  align-items-center">
                     <div className="col-12 col-sm-11 col-md-10 col-lg-8 py-1">
@@ -132,8 +142,7 @@ function Auth(props) {
       <p>  Don't have a account? <button className="btn-01" onClick={toggleHandle}>Register here</button></p> }
       
     </div>
-  </div>
-           
+      </div>     
         </div>
     )
 }

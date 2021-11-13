@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import logger from "morgan"
 import cors from "cors";
 import userRouter from "./routes/users.js"
-// import adminRouter from "./routes/admin.js"
+import adminRouter from "./routes/admin.js"
 const app=express()
 const CONNECTION_URL = "mongodb://localhost:27017/incubation-mangement";
 const port = 4000;
@@ -16,6 +16,7 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 
 
 app.use("/", userRouter);
+app.use("/admin", adminRouter);
 app.use((req, res, next) => {
     const error = new Error("Resources not found!");
     error.status = 404;

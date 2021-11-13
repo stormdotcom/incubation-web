@@ -1,11 +1,16 @@
-import { Button } from '@mui/material';
 import React from 'react'
 import { Link } from "react-router-dom";
 import InfoIcon from '@mui/icons-material/Info';
 import launchPad from  "../../../images/Logo.png";
 import Badge from '@mui/material/Badge';
-import "./styles.css"
+import {useDispatch} from "react-redux";
+import { doLogout } from '../../../Redux/userSlice/loginSlice';
+import "./styles.css";
 function Navbar() {
+    const dispatch=useDispatch()
+  const handleLogout=()=>{
+    dispatch(doLogout())
+  }
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg">
         <div className="container-fluid ">
@@ -32,9 +37,9 @@ function Navbar() {
             Options <InfoIcon style={{ color: '#9629d2' }} />
           </Link>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><Link className="dropdown-item" to="/" >Settings</Link></li>
-            <li><button className="dropdown-item">Notifications&nbsp; <Badge color="secondary" badgeContent={99}>  </Badge> </button> </li>
-            <li><Link className="dropdown-item" to="/" >Logout</Link></li>
+            <li><Link className="dropdown-item" to="/status" >View Status  &nbsp; &nbsp;<Badge color="primary" badgeContent={1}></Badge></Link></li>
+            <li><button className="dropdown-item">Notifications &nbsp; &nbsp;<Badge color="secondary" badgeContent={99}>  </Badge> </button> </li>
+            <li><Link className="dropdown-item" to="/auth" onClick={handleLogout} >Logout</Link></li>
           </ul>
         </li>
       </ul>

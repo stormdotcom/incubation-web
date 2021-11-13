@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Navigate } from "react-router";
 const initialState={
     isLoading: false,
     isAuth: false,
@@ -13,17 +14,25 @@ export const loginSlice =createSlice({
             state.isAuth= false;
             state.error=""
         },
-        loginSuccess: (state)=>{
+        loginSuccess: (state, action)=>{
             state.isLoading =false
+            localStorage.setItem('profile', JSON.stringify(action.payload))
             state.isAuth=true;
             state.error="";
         },
         loginFail:(state, action)=>{
             state.isLoading =false
             state.error=action.payload;
+        },
+        doLogout:(state, action)=>{
+            state.isLoading =false;
+            state.isAuth=false;
+            state.error="";
+            localStorage.removeItem("profile");
+            Navigate("/auth")
         }
     }
 })
 
-export const {loginPending, loginSuccess, loginFail} = loginSlice.actions;
+export const {loginPending, loginSuccess, loginFail, doLogout} = loginSlice.actions;
 export default loginSlice.reducer;

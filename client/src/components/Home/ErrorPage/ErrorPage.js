@@ -16,16 +16,16 @@ function ErrorPage() {
                     <h2>
                         404 Requested page not found!</h2>
                     <div className="error-details py-4">
-                        Sorry, an error has occured for <span className="text-danger bold"> {location.pathname}</span> 
+                    requested resources not found for the the path <span className="text-danger bold"> {location.pathname}</span> 
                     </div>
                     <div className="error-actions d-flex justify-content-center  mt-5">
-                        <Link to="/" className="btn btn-secondary"><span className="glyphicon glyphicon-home"></span>
+                        <Link to="/" className="btn btn-secondary mx-1"><span className="glyphicon glyphicon-home"></span>
                             Take Me Home </Link>
                             <Link to="/#home" onClick={(e)=> {
                                 window.location = mailto; 
                                 e.preventDefault();
                                 }} 
-                                className="btn btn-primary"><span > <img src={logo} alt="logo" height="20px"/> </span> Contact Support </Link>
+                                className="btn btn-primary mx-1"><span > <img src={logo} alt="logo" height="20px"/> </span> Contact Support </Link>
                     </div>
                 </div>
             </div>

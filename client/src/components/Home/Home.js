@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
-import Navbar from './NavBar/Navbar'
-import SlotRegistrationForm from './RegistrationForm/RegistrationForm'
+import React, { useState, useEffect } from 'react'
 import Auth from '../AuthenticationPage/AuthenticationPage';
-import {getUserPending, getUserSuccess, getUserFail} from "../../Redux/userSlice/userSlice";
-import {useDispatch, useSelector} from "react-redux"
+import { useSelector} from "react-redux";
+
 import IndexPage from './RegistrationForm/IndexPage';
+import { Alert, CircularProgress } from '@mui/material';
 function Home() {
-
-
-    const isLogin=true
+    const [loggedin, setLogggedin] = useState(JSON.parse(localStorage.getItem('profile')));
+    const { isLoading, error} = useSelector(state => state.user)
+    useEffect(() => {
+        setLogggedin(JSON.parse(localStorage.getItem('profile')))
+        
+    }, [loggedin])
     return (
         <div>
-            {isLogin ?   <IndexPage/> : <Auth   />}
+            {isLoading && CircularProgress}
+            { error && <Alert> error</Alert> }
+            {loggedin ?   <IndexPage/> : <Auth   />}
 
         </div>
     )

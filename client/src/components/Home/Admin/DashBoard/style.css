@@ -1,0 +1,7 @@
+.mainDashboard {
+    display: flex;
+}
+.pieChart, .barChart {
+    margin: auto;
+    margin-top: 10%;
+}

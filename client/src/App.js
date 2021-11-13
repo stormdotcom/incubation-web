@@ -9,7 +9,9 @@ import Home from "./components/Home/Home"
 import RegistrationForm from "./components/Home/RegistrationForm/RegistrationForm";
 import ErrorPage from "./components/Home/ErrorPage/ErrorPage";
 import Auth from "./components/AuthenticationPage/AuthenticationPage"
-import BookingForm from "./components/BookingForm/BookingForm";
+import ViewStatus from "./components/Home/ViewStatus/ViewStatus";
+import Admin from "./components/Home/Admin/Admin";
+import AdminAuth from "./components/Home/Admin/Auth/Auth"
 // index page shwoing details
 function App() {
   return (
@@ -17,9 +19,11 @@ function App() {
       <Router>  
        <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth" element={ <Auth />} />
         <Route path="/companyregistration" element={<RegistrationForm />} />
-        <Route path="/slotbooking" element={<BookingForm />} />
+        <Route path="/status" element={<ViewStatus />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/auth" element={<AdminAuth />} />
         <Route path="/*" element={<ErrorPage />} />
        </Routes>
        <Footer />

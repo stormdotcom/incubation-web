@@ -4,14 +4,15 @@ import User from '../models/userModel.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 export const signin= async(req, res)=>{
+    res.setHeader('Content-Type', 'text/plain');
     const {email, password} = req.body;
-    if(!email || !password) res.status(200).json({message: "Invalid Entry Please try again", error:true});
+    if(!email || !password) return res.status(200).json({message: "Invalid Entry Please try again", error:true});
     try {
         const existingUser = await User.findOne({ email});
         if(!existingUser) return res.status(200).json({message: "User not Found", error:true});
         const isPassword = await bcrypt.compare(password, existingUser.password);
         if(!isPassword) return res.status(200).json({message: "Incorrect Password", error:true});
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id}, "secret", {expiresIn: "7d"});
+        const token = jwt.sign({email: existingUser.email, id: existingUser._id}, "secret", {expiresIn: "1h"});
         res.status(200).json({result: existingUser, token})
     }
     catch(err){
@@ -20,10 +21,10 @@ export const signin= async(req, res)=>{
 }
 export const signup= async(req, res)=>{
     const {email, password, confirmPassword, fullname } = req.body;
-    if(!email || !password || !fullname) res.status(200).json({message: "Empty input Please try again", error:true});
+    if(!email || !password || !fullname) return res.status(200).json({message: "Empty input Please try again", error:true});
     try {
         const existingUser = await User.findOne({ email});
-        if(existingUser) return res.status(200).json({message: "User already exits, Please try other email", error:true});
+        if(existingUser) return res.status(200).json({message: "User already exists, Please try other email", error:true});
         if(password !== confirmPassword) return res.status(200).json({message: "Password mismatch, Try again", error:true});
 
         const hashedPassword = await bcrypt.hash(password, 8);
@@ -36,13 +37,23 @@ export const signup= async(req, res)=>{
     }
 }
 export const fetchUser=async(req,res)=>{
-    const {userID}= req.body
+    const {id}= req.body
     try {
-            const userDetails =await User.find({_id:userID});
-            conseol.log(userDetails)
-            if(!userDetails) res.send(200).json({message: "user not found", error: true})
-            res.send(200).json(userDetails)
+            const userDetails =await User.find({_id:id});
+            if(!userDetails) res.status(200).json({message: "user not found", error: true})
+            res.status(200).json(userDetails)
     } catch (error) {
         res.status(200).json({message: "Something went wrong", error: true})
+    }
+}
+export const companyDetails=async(req,res)=>{
+    try {   console.log("here")
+    const {email} = req.body;
+            // const userDetails =await Company.find({email:email});
+            const companyDetails =await Company.create(req.body);
+            if(companyDetails) res.status(200).json({message: "Successfuly registred", error: false})
+            res.status(200).json({message: "Error while registering", error: true})
+    } catch (err) {
+        console.log(err.message)
     }
 }
