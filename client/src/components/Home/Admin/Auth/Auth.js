@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import "./style.css"
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import {adminSignin} from "../../../../api/api"
+import {adminSignin} from "../../../../api/adminAPI"
 import {loginPending, loginSuccess, loginFail} from "../../../../Redux/userSlice/loginSlice";
 import {useNavigate} from 'react-router-dom';
 // import { getUserProfile } from './userAction' todo Admin Action;
@@ -14,7 +14,7 @@ function Auth(props) {
     const navigate  = useNavigate()
     const  {isLoading, error} = useSelector(state=> state.login)
     const [formData, setFormData] =useState(initialValue)
-  //  let user= JSON.parse(localStorage.getItem('LaunchPad'))
+
     async function handleSignIn(e){
       e.preventDefault()
      dispatch(loginPending())
@@ -22,7 +22,7 @@ function Auth(props) {
       const isAuth =await adminSignin(formData);
       if(isAuth.data.error) throw new Error(isAuth.data.message)
       dispatch(loginSuccess())
-    //   dispatch(getUserProfile(isAuth.data.result._id)) todo
+
 
       navigate("/")
      } catch (error) {

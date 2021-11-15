@@ -16,7 +16,7 @@ function SlotAllocation() {
   let [click, setCLicked] = useState(false);
   let [allusers, setAllUser] = useState([]);
   useEffect(() => {
-    getAllSlots().then((result) => setSlots(() => [...result]));
+    getAllSlots().then((result) => setSlots(()=> [...result]));
     getAllusers().then((result) => setAllUser(() => [...result]));
   }, [click]);
   const selectSlot = async (i, slotId) => {
@@ -33,16 +33,18 @@ function SlotAllocation() {
     }).then((result) => {
       if (result.value) {
         selectSlot(result.value, id);
+
       }
     });
   }
 
   const handelAddSlot = async () => {
+
     Swal.fire({
       title: "Add Slots",
-      icon: "add",
+      icon: "question",
       input: "range",
-      inputLabel: "Number of slot",
+      inputLabel: "how much slots?",
       inputAttributes: {
         min: 1,
         max: 10,
@@ -51,6 +53,7 @@ function SlotAllocation() {
       inputValue: 2,
     }).then((result) => {
       if (result.value) {
+        setCLicked(value => !value)
         addSlots(result.value);
       }
     });

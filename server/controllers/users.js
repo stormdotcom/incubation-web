@@ -12,7 +12,7 @@ export const signin= async(req, res)=>{
         if(!existingUser) return res.status(200).json({message: "User not Found", error:true});
         const isPassword = await bcrypt.compare(password, existingUser.password);
         if(!isPassword) return res.status(200).json({message: "Incorrect Password", error:true});
-        const token = jwt.sign({email: existingUser.email, id: existingUser._id}, "secret", {expiresIn: "1h"});
+        const token = jwt.sign({email: existingUser.email, id: existingUser._id, fullname: existingUser.fullname }, "secret", {expiresIn: "1h"});
         res.status(200).json({result: existingUser, token})
     }
     catch(err){
@@ -29,31 +29,42 @@ export const signup= async(req, res)=>{
 
         const hashedPassword = await bcrypt.hash(password, 8);
         const result = await User.create({ email, password: hashedPassword, fullname:fullname, slotRegistered:false});
-        const token = jwt.sign({email: result.email, id: result._id}, "secret", {expiresIn: "1h"});
+        const token = jwt.sign({email: result.email, id: result._id, fullname:result.fullname}, "secret", {expiresIn: "1h"});
         res.status(200).json({result, token})
     }
     catch(err){
+        console.log(err.message)
         res.status(200).json({message: "Something went wrong", error:true})
     }
 }
 export const fetchUser=async(req,res)=>{
-    const {id}= req.body
+    const {id}= req.params;
     try {
-            const userDetails =await User.find({_id:id});
-            if(!userDetails) res.status(200).json({message: "user not found", error: true})
+            const userDetails =await User.findOne({_id:id}).catch((err)=>console.log(err.message));
+            if(!userDetails) res.status(200).json({message: "error fetching user", error: true})
             res.status(200).json(userDetails)
     } catch (error) {
         res.status(200).json({message: "Something went wrong", error: true})
     }
 }
 export const companyDetails=async(req,res)=>{
-    try {   console.log("here")
+    
+    let userId=req.body.userId
+    try {   
     const {email} = req.body;
             // const userDetails =await Company.find({email:email});
             const companyDetails =await Company.create(req.body);
-            if(companyDetails) res.status(200).json({message: "Successfuly registred", error: false})
+            console.log(userId)
+            if(companyDetails) {
+                res.status(200).json({message: "Successfuly registred", error: false})
+            }   await User.findOneAndUpdate({_id:userId}, {Registered: true})
             res.status(200).json({message: "Error while registering", error: true})
     } catch (err) {
         console.log(err.message)
     }
+}
+export const getCurrentCompany=async(req, res)=>{
+        let userID=req.params.id;
+        await Company.findOne({userID:userID}).then((company)=> res.status(200).json(company))
+        .catch((err)=> res.status(200).json({message:err.message}))
 }

@@ -13,9 +13,8 @@ import ApplicationsList from "./AllList/AllList";
 import Dashboard from "./DashBoard/Dashboard";
 import { getAllcompanyList } from "../../../api/adminAPI";
 import "./style.css";
-
 function Admin() {
-  let applicationList;
+
     const [toggleSelection, setSelection]=useState("dashboard");
     const [list, setList]=useState([])
     const handleSelection=(selection)=>{
@@ -23,10 +22,9 @@ function Admin() {
     }
 
 useEffect(()=>{
-  getAllcompanyList().then((result)=> setList(prevValue=> [...result]))
-
+  getAllcompanyList().then((result)=> setList(prevValue=> [...prevValue,...result]))
  
-},[])
+}, [])
   return (
 
     <>

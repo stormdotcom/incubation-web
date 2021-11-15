@@ -4,3 +4,7 @@
     margin: 30px 4px 10px 4px;
     padding: 0 10px;
 }
+.progressBar p{
+    margin: 10px auto;
+    text-align: center;
+}

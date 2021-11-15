@@ -14,12 +14,15 @@
     min-height: 80vh;
 }
 .sideBox {
-    width: 10%;
+    width: 20%;
     display: flex;
-    align-items: center;
 
 
 }
+td {
+    width: 80%; 
+
+  }
 .mainBox {
     width: 80%;
     padding-top:20px;
@@ -97,10 +100,7 @@ table {
     height: 1px;
     width: 14px;
   }
-  td {
-      padding: 0 5px;
-      font-size:small;
-  }
+
   .swal2-icon, .swal2-info {
     border-color: #710fa5 !important;
     color: #710fa5 !important;
@@ -117,7 +117,9 @@ table {
     text-align: center;
     color:#424242;
     margin: auto;
+    
 }
+
   @media screen and (max-width:1042px) {
       .formBody {
           padding: 10px;

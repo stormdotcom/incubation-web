@@ -3,22 +3,24 @@ import "./style.css"
 import {TableRow, TableHead, TableContainer, TableCell, TableBody, Table} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import {Button} from "@mui/material"
-import {changePendingStatus} from "../../../../api/adminAPI"
+import {changePendingStatus, approveCompany} from "../../../../api/adminAPI"
 import Swal from "sweetalert2"
-function createData(id, userID,name, logo, commpanyName, approved, allocated) {
-    return { id,userID, name, logo, commpanyName, approved, allocated };
+function createData(id, userID,name, email, logo, commpanyName, approved, allocated) {
+    return { id,userID, name, email, logo, commpanyName, approved, allocated };
 }
 
 function AllList({applicationList}) {
-    // const [pendingLIst, setPendingList]=useState([])
-    // const [newList, setnewList]=useState([])
+
+    // sort pending list
     let pendingList = applicationList.filter(ele =>ele.pending)
-    let newList = applicationList.filter(ele =>!ele?.pending)
-     const rows =   pendingList.map((element, index) => {
-       return createData(element.index=index, element._id, element.name,element.logo, element.commpanyName,element.approved, element.allocated )
+     const rows =   pendingList.map((element) => {
+       return createData(element.index, element._id, element.fullname, element.email, element.logo, element.commpanyName,element.approved, element.allocated )
         })
-        const newApplicant =   newList.map((element, index) => {
-            return createData(element.index=index, element._id, element.name,element.logo, element.commpanyName,element.approved, element.allocated )
+    
+    //sort new list
+        let newList = applicationList.filter(ele =>!ele?.pending)
+        const newApplicant =   newList.map((element) => {
+            return createData(element.index, element._id, element.fullname, element.email, element.logo, element.commpanyName,element.approved, element.allocated )
              })
 const handleView=(user)=>{
     let currentUser = applicationList.filter(ele => ele._id === user.userID);
@@ -40,6 +42,11 @@ const handleView=(user)=>{
 const handlePending = (userID, key)=>{
 
     changePendingStatus(userID)
+
+}
+const handleApprove = async ({userID, email})=>{
+     approveCompany(userID, email)
+
 }
              
     return (
@@ -72,7 +79,7 @@ const handlePending = (userID, key)=>{
                                         <TableCell align="center">{row.companyName}</TableCell>
                                         <TableCell align="center">Yes</TableCell>
                                         <TableCell align="center">{row.approved ? "Yes" : "No"}</TableCell>
-                                        <TableCell align="center"> <Button onClick={()=>handleView(row)} size="small">View</Button></TableCell>
+                                        <TableCell align="center"> <Button onClick={()=>handleView(row) } size="small">View</Button></TableCell>
                                         <TableCell align="center"> <Button onClick={()=>handlePending(row.userID, index)} variant="contained" size="medium">Pending</Button> </TableCell> 
                                     </TableRow>
                                 ))}
@@ -93,7 +100,7 @@ const handlePending = (userID, key)=>{
                 <div className="tableContainer">
                     <h3 style={{ textAlign: "center", margin: "20px 10px", padding: "15px 0 5px 0"}}> Pending List </h3>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 300 }} md={{ minWidth: 300 }} aria-label="simple table" style={{fontSize: "smaller"}}>
+                        <Table sx={{ minWidth: 300 }} md={{ minWidth: 300 }} aria-label="simple table" style={{fontSize: "10px"}}>
                             <TableHead>
                                 <TableRow className="">
                                     <TableCell>#</TableCell>
@@ -104,6 +111,7 @@ const handlePending = (userID, key)=>{
                                     <TableCell align="center">Slot Allocation Approved</TableCell>
                                     <TableCell align="center">View</TableCell>
                                     <TableCell align="center">Action</TableCell>
+                                    <TableCell align="center">Comments</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -119,7 +127,9 @@ const handlePending = (userID, key)=>{
                                         <TableCell align="center">{row.approved ? "Yes" : "No"}</TableCell>
                                         <TableCell align="center">{row.allocated ? "Yes" : "No"}</TableCell>
                                         <TableCell align="center"> <Button  onClick={()=>handleView(row)} size="small">View</Button></TableCell>
-                                         <TableCell align="center">{!row.allocated ?  <Button variant="contained" size="medium">Allocate</Button> : "Fully Approved"}</TableCell>
+                                        <TableCell align="center"> {row.approved ?  <Button variant="contained" size="medium">Allocate</Button> : <Button  onClick={()=>handleApprove(row)} size="small">Approve</Button> }</TableCell>
+                                        {row.approved ?  (<TableCell align="center">{row.allocated ?  "Fully approved " : "Space allocation Pending"}</TableCell>)
+                                        :(<TableCell align="center">  Please Approve for space allocation</TableCell>) }
                                     </TableRow>
                                 ))}
                             </TableBody>

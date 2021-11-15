@@ -1,7 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./style.css"
-// import FileBase from "react-file-base64"
-function RegistrationForm({changes, submit}) {
+import ReactCloudinaryUploader from "@app-masters/react-cloudinary-uploader"
+
+function RegistrationForm({changes, submit, currentUser, setAllDocs, uploadLogo }) {
+    let options = {
+        cloud_name: "stormiscoming",
+        upload_preset: "incubationmanagement-all-docs",
+        language: "ptbr",
+        multiple: true,
+        maxFileSize:12000,
+        maxFiles:5,
+        sources: ["local", "google_drive", "camera"],
+        returnJustUrl: true,
+        buttonCaption:"Upload Documents"
+    };
+
+    const [documentsUpload , setDocumentupload] =useState(true)
+    function mutipleUpload (){
+        ReactCloudinaryUploader.open(options).then(image=>{
+            if (this.props.returnJustUrl)
+                image = image.url;
+                setAllDocs(prev=> [...prev, image.url])
+        }).catch(err=>{
+            console.log(err)
+        });
+    }
+   
+
     return (
             <div className="container">
          <form method="POST">
@@ -11,7 +36,8 @@ function RegistrationForm({changes, submit}) {
           <div className="col-12 col-sm-6 col-xl-6">
                  <div className="form-outline mt-4">
                  <label className="form-label" htmlFor="form6Example1">Full Name</label>
-                 <input onChange={changes} type="text" min="3" max="100" name="name" id="form6Example1" className="form-control" />
+                    <input name="userID" type="hidden" value={currentUser._id} />
+                 <input onChange={changes} type="text" min="3" max="100" name="fullname"  readOnly value={currentUser.fullname} id="form6Example1" className="form-control" />
              </div>
           </div>
           <div className="col-12 col-sm-6 col-xl-6">
@@ -38,7 +64,7 @@ function RegistrationForm({changes, submit}) {
           <div className="col-12 col-sm-6 col-xl-6">
                  <div className="form-outline mt-4">
                 <label className="form-label" htmlFor="form6Example1">Email</label>
-                <input onChange={changes} type="email" name="email" value="test" readOnly="readonly"  max="100" id="form6Example1" className="form-control" />
+                <input onChange={changes} type="email" value={currentUser.email} name="email" readOnly max="100" id="form6Example1" className="form-control" />
              </div>
           </div>
           <div className="col-12 col-sm-6 col-xl-6">
@@ -57,7 +83,7 @@ function RegistrationForm({changes, submit}) {
                  <div className="form-outline mt-4">
                  <label className="form-label" htmlFor="form6Example1">Company Logo</label>
                  <br />
-                    <input name="logo" type="file" accept=".jpeg, .jpg, .png"/>
+                    <input  type="file" onChange={uploadLogo} accept=".jpeg, .jpg, .png"/>
              </div>
           </div>
           {/* Describe */}
@@ -150,11 +176,22 @@ function RegistrationForm({changes, submit}) {
              </div>
             </div>  
             <div className="col-12 col-sm-12">
-                 <div className="form-outline mt-4">
+            {documentsUpload &&  <div className="form-outline mt-4" onClick={mutipleUpload}>
                  <label className="form-label" htmlFor="form6Example1">Business Proposal <small> (Detailed documents)</small></label>
                  <br />
-                     <input multiple name="businessProposal" type="file"  accept=".jpeg, .jpg, .png" />
+              
+                 <div className="multipleUpload" >
+                     <ReactCloudinaryUploader 
+                cloudName='stormiscoming'
+                uploadPreset='incubationmanagement-all-docs'
+                onUploadSuccess={(image)=>{
+                    console.log(image)
+                    setDocumentupload(value=> !value)
+
+                 }}/>
+            </div>
              </div>
+                }
              </div>
           </div> 
           <div className="col-3 col-lg-12 p-3">

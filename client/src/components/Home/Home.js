@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import Auth from '../AuthenticationPage/AuthenticationPage';
-import { useSelector} from "react-redux";
-
-import IndexPage from './RegistrationForm/IndexPage';
-import { Alert, CircularProgress } from '@mui/material';
+import React from 'react'
+// import Auth from '../AuthenticationPage/AuthenticationPage';
+import jwtDecode from 'jwt-decode';
+import IndexPage from './IndexPage';
 function Home() {
-    const [loggedin, setLogggedin] = useState(JSON.parse(localStorage.getItem('profile')));
-    const { isLoading, error} = useSelector(state => state.user)
-    useEffect(() => {
-        setLogggedin(JSON.parse(localStorage.getItem('profile')))
-        
-    }, [loggedin])
+    const token = (JSON.parse(localStorage.getItem('profile')));
+    let user =null
+    if(token)  user = jwtDecode(token)
     return (
         <div>
-            {isLoading && CircularProgress}
-            { error && <Alert> error</Alert> }
-            {loggedin ?   <IndexPage/> : <Auth   />}
-
+        <IndexPage user={user}/>
         </div>
     )
 }

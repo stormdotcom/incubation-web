@@ -15,12 +15,14 @@ import AdminAuth from "./components/Home/Admin/Auth/Auth"
 // index page shwoing details
 function App() {
   return (
- 
+    // todo 
+    // jwt authentication
+    // slot booking update company collections
+    // 
       <Router>  
        <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={ <Auth />} />
-        <Route path="/companyregistration" element={<RegistrationForm />} />
         <Route path="/status" element={<ViewStatus />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/auth" element={<AdminAuth />} />

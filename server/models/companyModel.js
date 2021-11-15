@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const companySchemea = mongoose.Schema({
-    name: {type:String, default:"defaultValue"},
+    userId:{type:String},
+    fullname: {type:String},
     address: {type:String,  default:"defaultValue"},
     city: {type:String,  default:"defaultValue"},
     state: {type:String,  default:"defaultValue"},
@@ -19,7 +20,7 @@ const companySchemea = mongoose.Schema({
     marketSize:  {type:String},
     marketingStrategy:  {type:String},
     typeofIncubation:  {type:String},
-    businessProposal: {type:String},
+    businessProposal: {type:Array},
     createdAt: {
         type: Date,
         default: new Date()

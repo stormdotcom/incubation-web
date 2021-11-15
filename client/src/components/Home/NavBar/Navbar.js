@@ -6,11 +6,15 @@ import Badge from '@mui/material/Badge';
 import {useDispatch} from "react-redux";
 import { doLogout } from '../../../Redux/userSlice/loginSlice';
 import "./styles.css";
+import decode from "jwt-decode"
 function Navbar() {
+  let encodedData=JSON.parse(localStorage.getItem("profile"));
+let user = decode(encodedData)
     const dispatch=useDispatch()
   const handleLogout=()=>{
     dispatch(doLogout())
   }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg">
         <div className="container-fluid ">
@@ -34,7 +38,7 @@ function Navbar() {
         </li>
         <li className="nav-item dropdown">
           <Link className="nav-link dropdown-toggle" to="/"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Options <InfoIcon style={{ color: '#9629d2' }} />
+            {user?.fullname} <InfoIcon style={{ color: '#9629d2' }} />
           </Link>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><Link className="dropdown-item" to="/status" >View Status  &nbsp; &nbsp;<Badge color="primary" badgeContent={1}></Badge></Link></li>

@@ -28,7 +28,6 @@ function Auth() {
       if(isAuth.data?.error) throw new Error(isAuth.data.message)
       else {
         dispatch(loginSuccess(isAuth.data.token))
-        dispatch(getUserProfile(isAuth.data.result._id))
         navigate("/")
       }
      } catch (error) {
@@ -40,23 +39,16 @@ function Auth() {
     }
     async function handleSignUp(e){
       e.preventDefault()
-           dispatch(loginSuccess())
-     try {
       const isAuth =await signup(formData);
-      console.log(isAuth)
-      if(isAuth.data?.error) throw new Error(isAuth.data.message)
+      if(isAuth.data?.error) {
+       navigate("/auth")
+       dispatch(loginFail(isAuth.data?.message))
+     }
       else {
         dispatch(loginSuccess(isAuth.data.token))
-        dispatch(getUserProfile(isAuth.data.result._id))
         navigate("/")
       }
-     
-     } catch (error) {
-       dispatch(loginFail(error.message))
-       navigate("/auth")
-     }
-      
-    }
+     }  
     function handleChange(e){
         setFormData({...formData, [e.target.name]: e.target.value})
     }

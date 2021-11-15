@@ -13,19 +13,15 @@ export const userSlice =createSlice({
             state.isLoading =true
         },
         getUserSuccess: async (state, action)=>{
-            state.isLoading =false;
-            state.user=action.payload
-            state.error=""
+            state=action.payload
         },
         getUserFail:(state, action)=>{
-            state.isLoading =false
+            console.log(action)
             state.error=action.payload;
             alert(state.error)
         },
         logoutUser:(state, action)=>{
-            state.user={};
-            state.isLoading=false;
-            state.error= "";
+            state.user=null;
         }
     }
 })
